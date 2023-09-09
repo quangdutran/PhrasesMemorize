@@ -19,7 +19,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
     }
 
     private void makeNotification(Context context) {
-        String channelId = "CHANNEL_NOTI";
+        String channelId = "CHANNEL_NOTIFICATION";
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context, channelId);
         builder.setContentTitle("Learning time").setContentText("Deustch lernen")
