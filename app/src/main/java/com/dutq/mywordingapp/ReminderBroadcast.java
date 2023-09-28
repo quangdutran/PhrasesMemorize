@@ -12,17 +12,23 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.dutq.mywordingapp.db.WordDBHelper;
+
+import java.util.Optional;
+
 public class ReminderBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        makeNotification(context);
+        Optional.of(WordDBHelper.getRandomPhrase())
+                        .filter(phrase -> !phrase.isEmpty())
+                                .ifPresent(phrase -> makeNotification(context, phrase));
     }
 
-    private void makeNotification(Context context) {
+    private void makeNotification(Context context, String phrase) {
         String channelId = "CHANNEL_NOTIFICATION";
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context, channelId);
-        builder.setContentTitle("Learning time").setContentText("Deustch lernen")
+        builder.setContentTitle("Learning time").setContentText(phrase)
                 .setSmallIcon(R.drawable.android_head);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
