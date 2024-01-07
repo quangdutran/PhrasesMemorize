@@ -9,9 +9,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import kotlin.Pair;
+
 public class WordDBHelper extends SQLiteOpenHelper {
     private Context context;
-    private static final String DB_NAME = "Word.db";
+    public static final String DB_NAME = "Word.db";
     private static int DB_VERSION = 1;
     public static final String TABLE_NAME = "words";
     private static final String ID = "id";
@@ -61,7 +63,7 @@ public class WordDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public static String getRandomPhrase() {
+    public Pair<String, String> getRandomPhrase() {
         String query = "SELECT "+
                 WordDBHelper.COL_PHRASE +
                 "," +
@@ -70,13 +72,13 @@ public class WordDBHelper extends SQLiteOpenHelper {
                 WordDBHelper.TABLE_NAME +
                 " ORDER BY RANDOM() LIMIT 1";
         SQLiteDatabase readDB = instance.getReadableDatabase();
-        String result = "";
+        Pair result = new Pair<>("","");
         Cursor cursor = readDB.rawQuery(query, null);
         if (cursor.getCount() > 0) {
             cursor.moveToNext();
             String phrase = cursor.getString(0);
             String meaning = cursor.getString(1);
-            result = phrase + " = " + meaning;
+            result = new Pair<>(phrase,meaning);
         }
         return result;
     }

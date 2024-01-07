@@ -1,19 +1,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Widget.MyWordingApp.AppWidget.Container"
+    android:id="@+id/widgetBox"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:theme="@style/Theme.MyWordingApp.AppWidgetContainer">
 
     <TextView
-        android:id="@+id/appwidget_text"
+        android:id="@+id/phrase"
         style="@style/Widget.MyWordingApp.AppWidget.InnerView"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerVertical="false"
         android:layout_margin="8dp"
         android:contentDescription="@string/appwidget_text"
-        android:text="@string/appwidget_text"
+        android:text="This is the phrase"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/meaning"
+        style="@style/Widget.MyWordingApp.AppWidget.InnerView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="@string/appwidget_text"
+        android:text="@string/meaningText"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
 </RelativeLayout>

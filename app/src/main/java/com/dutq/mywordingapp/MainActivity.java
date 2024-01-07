@@ -39,16 +39,7 @@ public class MainActivity extends AppCompatActivity {
         meaning = findViewById(R.id.meaningText);
 
         dbHelper = WordDBHelper.getInstance(MainActivity.this);
-        setAlarm();
         button.setOnClickListener(this::saveWord);
-    }
-    void setAlarm() {
-        Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        long now = System.currentTimeMillis();
-        long tenSeconds = 1000 * 10;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, now + tenSeconds, 60000, pendingIntent);
     }
     void saveWord(View view) {
         dbHelper.addWord(phrase.getText().toString(), meaning.getText().toString());
