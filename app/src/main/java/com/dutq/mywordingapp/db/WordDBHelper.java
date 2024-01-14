@@ -9,7 +9,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import kotlin.Pair;
+import kotlin.Triple;
 
 public class WordDBHelper extends SQLiteOpenHelper {
     private Context context;
@@ -61,6 +65,46 @@ public class WordDBHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Added successfully", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void editWord(int id, String phrase, String meaning) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_PHRASE, phrase);
+        contentValues.put(COL_MEANING, meaning);
+        long result = db.update(TABLE_NAME, contentValues, ID + " = " + id, null);
+        if (result == -1) {
+            Toast.makeText(context, "Can't save", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, "Saved successfully", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void deleteWord(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME, ID + " = " + id, null);
+        if (result == -1) {
+            Toast.makeText(context, "Can't delete", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, "Deleted successfully", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public List<Triple<Integer, String, String>> searchForWord(String key) {
+        List<Triple<Integer, String, String>> result = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " +
+                ID + "," +
+                COL_PHRASE + "," +
+                COL_MEANING +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COL_PHRASE + " LIKE '%" + key +"%' OR " +
+                COL_MEANING + " LIKE '%" + key + "%';";
+        Cursor cursor = db.rawQuery(query, null);
+        while (cursor.moveToNext()) {
+            result.add(new Triple<>(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
+        }
+        return result;
     }
 
     public Pair<String, String> getRandomPhrase() {

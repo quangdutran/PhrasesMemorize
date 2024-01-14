@@ -16,8 +16,10 @@
         android:layout_margin="8dp"
         android:contentDescription="@string/appwidget_text"
         android:text="This is the phrase"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:background="@drawable/germany"
+        android:textSize="20sp"
+        android:autoSizeTextType="uniform"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/meaning"
@@ -28,6 +30,8 @@
         android:layout_alignParentBottom="true"
         android:contentDescription="@string/appwidget_text"
         android:text="@string/meaningText"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:background="@drawable/england"
+        android:textSize="20sp"
+        android:autoSizeTextType="uniform"
+        android:textColor="@color/white" />
 </RelativeLayout>

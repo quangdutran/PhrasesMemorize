@@ -4,22 +4,23 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dutq.mywordingapp.db.WordDBHelper;
 
+import java.util.List;
+
+import kotlin.Triple;
+
 public class MainActivity extends AppCompatActivity {
-    Button button;
+    Button saveButton, searchButton;
+    ListView searchResult;
     TextView phrase, meaning;
     WordDBHelper dbHelper;
 
@@ -34,14 +35,22 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
         }
 
-        button = findViewById(R.id.saveBtn);
+        saveButton = findViewById(R.id.saveBtn);
+        searchButton = findViewById(R.id.searchBtn);
+        searchResult = findViewById(R.id.searchResult);
         phrase = findViewById(R.id.wordText);
         meaning = findViewById(R.id.meaningText);
 
         dbHelper = WordDBHelper.getInstance(MainActivity.this);
-        button.setOnClickListener(this::saveWord);
+        saveButton.setOnClickListener(this::saveWord);
+        searchButton.setOnClickListener(this::searchWord);
     }
     void saveWord(View view) {
         dbHelper.addWord(phrase.getText().toString(), meaning.getText().toString());
+    }
+
+    void searchWord(View view) {
+        List<Triple<Integer, String, String>> result = dbHelper.searchForWord(phrase.getText().toString());
+        searchResult.setAdapter(new WordItemViewAdapter(getApplicationContext(), result));
     }
 }
