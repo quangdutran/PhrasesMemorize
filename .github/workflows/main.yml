@@ -30,3 +30,25 @@ jobs:
         with:
           name: lint.html
           path: app/build/reports/lint-results-debug.html
+  package:
+    needs: [ lint ]
+    name: Generate APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: "temurin"
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: expense-manager.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
