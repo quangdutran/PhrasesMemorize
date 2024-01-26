@@ -18,7 +18,6 @@
         android:text="This is the phrase"
         android:background="@drawable/germany"
         android:textSize="20sp"
-        android:autoSizeTextType="uniform"
         android:textColor="@color/white"/>
 
     <TextView
@@ -32,6 +31,5 @@
         android:text="@string/meaningText"
         android:background="@drawable/england"
         android:textSize="20sp"
-        android:autoSizeTextType="uniform"
         android:textColor="@color/white" />
 </RelativeLayout>
