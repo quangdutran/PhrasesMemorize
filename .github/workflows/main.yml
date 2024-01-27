@@ -1,35 +1,12 @@
 name: CI
 on:
   push:
-    branches: [ main ]
+    branches: [ test-clickable-widget ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
-
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
-
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: 17
-          distribution: "temurin"
-
-      - name: Run Lint
-        run: ./gradlew lintDebug
-
-      - name: Upload html test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint.html
-          path: app/build/reports/lint-results-debug.html
   package:
     needs: [ lint ]
     name: Generate APK

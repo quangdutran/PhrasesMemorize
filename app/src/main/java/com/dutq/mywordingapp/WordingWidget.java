@@ -1,12 +1,19 @@
 package com.dutq.mywordingapp;
 
+import static androidx.core.app.AppOpsManagerCompat.Api29Impl.getSystemService;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.widget.RemoteViews;
+
+import androidx.core.app.NotificationCompat;
 
 import com.dutq.mywordingapp.db.WordDBHelper;
 
@@ -31,6 +38,7 @@ public class WordingWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
+        makeNotification(context);
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
@@ -59,5 +67,30 @@ public class WordingWidget extends AppWidgetProvider {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+    }
+
+    private void makeNotification(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Noti";
+            String description = "Test";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("SimpleNotification", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this.
+            NotificationManager notificationManager = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                notificationManager = context.getSystemService(NotificationManager.class);
+            }
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "SimpleNotification")
+                    .setSmallIcon(R.drawable.android_head)
+                    .setContentTitle("My notification")
+                    .setContentText("Test")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            notificationManager.notify(0, builder.build());
+        }
+
     }
 }
