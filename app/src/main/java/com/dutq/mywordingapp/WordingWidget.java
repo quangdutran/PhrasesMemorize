@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.widget.RemoteViews;
+import android.widget.Toast;  
 
 import androidx.core.app.NotificationCompat;
 
@@ -54,6 +55,7 @@ public class WordingWidget extends AppWidgetProvider {
             updateWords(context, remoteViews);
             appWidgetManager.updateAppWidget(watchWidget, remoteViews);
         }
+        Toast.makeText(context, intent.getAction(), Toast.LENGTH_SHORT).show();
     }
 
     private void updateWords(Context context, RemoteViews views) {
