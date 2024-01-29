@@ -1,7 +1,5 @@
 package com.dutq.mywordingapp;
 
-import static androidx.core.app.AppOpsManagerCompat.Api29Impl.getSystemService;
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
