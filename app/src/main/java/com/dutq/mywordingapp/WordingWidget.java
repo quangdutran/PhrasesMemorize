@@ -23,7 +23,7 @@ import kotlin.Pair;
  */
 public class WordingWidget extends AppWidgetProvider {
     WordDBHelper dbHelper;
-    private static String UPDATE = "UPDATE";
+    public static fianl String UPDATE = "UPDATE";
 
     private void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
