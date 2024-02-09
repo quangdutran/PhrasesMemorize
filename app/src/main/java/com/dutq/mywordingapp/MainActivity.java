@@ -8,13 +8,17 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dutq.mywordingapp.db.WordDBHelper;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import kotlin.Triple;
 
@@ -51,6 +55,22 @@ public class MainActivity extends AppCompatActivity {
 
     void searchWord(View view) {
         List<Triple<Integer, String, String>> result = dbHelper.searchForWord(phrase.getText().toString());
-        searchResult.setAdapter(new WordItemViewAdapter(getApplicationContext(), result));
+        Toast.makeText(this, result.get(0).component1() + "", Toast.LENGTH_SHORT).show();
+        ArrayAdapter wordItemAdapter = new WordItemViewAdapter(getApplicationContext(), result);
+        searchResult.setAdapter(wordItemAdapter);
+        searchResult.setOnItemLongClickListener((adapterView, view1, i, l) -> {
+            try {
+                Procedure deleteItem = () -> {
+                    dbHelper.deleteWord((int) view1.getTag());
+                    result.remove(i);
+                    wordItemAdapter.notifyDataSetChanged();
+                };
+                DialogBuilder.Companion.deleteConfirmation(MainActivity.this, deleteItem);
+                return true;
+            } catch (Exception e) {
+                Toast.makeText(MainActivity.this, "Could not delete item in db", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 }
