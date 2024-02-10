@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
     void searchWord(View view) {
         List<Triple<Integer, String, String>> result = dbHelper.searchForWord(phrase.getText().toString());
-        Toast.makeText(this, result.get(0).component1() + "", Toast.LENGTH_SHORT).show();
         ArrayAdapter wordItemAdapter = new WordItemViewAdapter(getApplicationContext(), result);
         searchResult.setAdapter(wordItemAdapter);
         searchResult.setOnItemLongClickListener((adapterView, view1, i, l) -> {
