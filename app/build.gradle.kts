@@ -41,4 +41,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("org.robolectric:robolectric:4.9")
+    testImplementation("org.robolectric:annotations:4.9")
 }
