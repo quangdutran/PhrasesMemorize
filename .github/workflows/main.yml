@@ -1,12 +1,61 @@
 name: CI
 on:
   push:
-    branches: [ add-simulator ]
+    branches: [ main ]
   pull_request:
-    branches: [ add-simulator ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: "temurin"
+
+      - name: Run Lint
+        run: ./gradlew lintDebug
+
+      - name: Upload html test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint.html
+          path: app/build/reports/lint-results-debug.html
+  package:
+    needs: [ lint ]
+    name: Generate APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: "temurin"
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: memorize-phrase.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
   connected-tests:
     runs-on: macos-latest
 
@@ -30,3 +79,9 @@ jobs:
           target: google_apis
           arch: x86_64
           script: ./gradlew connectedCheck
+
+      - name: Upload html test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: instrumented-test.html
+          path: app/build/reports/androidTests/connected/debug/index.html

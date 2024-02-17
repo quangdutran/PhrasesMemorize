@@ -30,7 +30,7 @@ class MainActivityTest {
             val rs = activity.findViewById<ListView>(R.id.searchResult)
             assertTrue(
                 "One matching result",
-                rs.count == 3
+                rs.count == 1
             )
             val item = rs.getItemAtPosition(0) as Triple<Int, String, String>
             assertTrue(
