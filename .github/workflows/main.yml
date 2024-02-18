@@ -55,3 +55,33 @@ jobs:
         with:
           name: memorize-phrase.apk
           path: app/build/outputs/apk/debug/app-debug.apk
+
+  connected-tests:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: "temurin"
+
+      - name: Run connected tests
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+          script: ./gradlew connectedCheck
+
+      - name: Upload html test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: instrumented-test.html
+          path: app/build/reports/androidTests/connected/debug/index.html
