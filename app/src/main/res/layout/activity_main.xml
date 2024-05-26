@@ -25,21 +25,33 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:text="Meaning" />
-
-        <Button
-            android:id="@+id/saveBtn"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/save_btn" />
+            android:layout_marginTop="5dp">
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save_btn" />
+            <Button
+                android:id="@+id/searchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/saveBtn"
+                android:text="@string/search_btn"
+                />
+            <Button
+                android:id="@+id/makeSentence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/searchBtn"
+                android:text="@string/makeSentenceBtn"
+                />
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/searchBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/search_btn" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"

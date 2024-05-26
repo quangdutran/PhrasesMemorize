@@ -16,14 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dutq.mywordingapp.db.WordDBHelper;
+import com.dutq.mywordingapp.gemini.Gemini;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import kotlin.Triple;
 
 public class MainActivity extends AppCompatActivity {
-    Button saveButton, searchButton;
+    Button saveButton, searchButton, makeSentenceBtn;
     ListView searchResult;
     TextView phrase, meaning;
     WordDBHelper dbHelper;
@@ -36,13 +38,16 @@ public class MainActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.saveBtn);
         searchButton = findViewById(R.id.searchBtn);
         searchResult = findViewById(R.id.searchResult);
+        makeSentenceBtn = findViewById(R.id.makeSentence);
         phrase = findViewById(R.id.wordText);
         meaning = findViewById(R.id.meaningText);
 
         dbHelper = WordDBHelper.getInstance(MainActivity.this);
         saveButton.setOnClickListener(this::saveWord);
         searchButton.setOnClickListener(this::searchWord);
+        makeSentenceBtn.setOnClickListener(this::makeSentence);
     }
+
     void saveWord(View view) {
         dbHelper.addWord(phrase.getText().toString(), meaning.getText().toString());
     }
@@ -65,5 +70,15 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    void makeSentence(View view) {
+        Gemini gemini = new Gemini();
+        try {
+            CompletableFuture<String> sentence = gemini.sendPromptAsync();
+            Toast.makeText(MainActivity.this, sentence.get(), Toast.LENGTH_SHORT).show();
+        } catch (Exception ex) {
+            Toast.makeText(MainActivity.this, "Could not get result from Gemini", Toast.LENGTH_SHORT).show();
+        }
     }
 }
