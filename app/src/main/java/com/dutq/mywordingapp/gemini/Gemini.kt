@@ -8,21 +8,24 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.CompletableFuture
 
 class Gemini {
-    suspend fun getPromptResponse(): String? {
+    private fun buildPrompt(phrase: String): String {
+        return "Make a sentence, nothing more, in German level B1 using this phrase \"$phrase\", use either you or he or she or you guys as subject."
+    }
+    private suspend fun getPromptResponse(phrase: String): String? {
         val generativeModel = GenerativeModel(
             modelName = "gemini-1.5-flash",
             apiKey = com.dutq.mywordingapp.BuildConfig.API_KEY
         )
 
-        val prompt = "Write a story about a magic backpack."
+        val prompt = buildPrompt(phrase)
         val response = generativeModel.generateContent(prompt)
         return response.text
     }
 
-    suspend fun sendPrompt(): String? {
+    suspend fun sendPrompt(phrase: String): String? {
         return withContext(Dispatchers.IO) {
-            getPromptResponse()
+            getPromptResponse(phrase)
         }
     }
-    fun sendPromptAsync(): CompletableFuture<String?> = GlobalScope.future { sendPrompt() }
+    fun sendPromptAsync(phrase: String): CompletableFuture<String?> = GlobalScope.future { sendPrompt(phrase) }
 }

@@ -21,5 +21,12 @@ class DialogBuilder {
             val alert = builder.create()
             alert.show()
         }
+
+        fun showSentence(context: Context, sentence: String) {
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage(sentence)
+            val alert = builder.create()
+            alert.show()
+        }
     }
 }

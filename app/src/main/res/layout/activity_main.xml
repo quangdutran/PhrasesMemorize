@@ -40,18 +40,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_toRightOf="@id/saveBtn"
+                android:layout_toEndOf="@id/saveBtn"
                 android:text="@string/search_btn"
                 />
-            <Button
-                android:id="@+id/makeSentence"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/searchBtn"
-                android:text="@string/makeSentenceBtn"
-                />
-        </RelativeLayout>
+                android:layout_gravity="center_horizontal"
+                android:layout_toEndOf="@id/searchBtn">
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center" />
 
+                <Button
+                    android:id="@+id/makeSentence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/makeSentenceBtn" />
+            </RelativeLayout>
+        </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -62,5 +72,4 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
     </LinearLayout>
-
 </LinearLayout>
