@@ -35,6 +35,8 @@ android {
 }
 
 dependencies {
+    val lifecycleVersion = "2.8.0"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
     implementation("com.google.ai.client.generativeai:generativeai:0.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
     implementation("androidx.appcompat:appcompat:1.6.1")
