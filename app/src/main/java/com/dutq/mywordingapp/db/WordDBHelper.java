@@ -65,6 +65,7 @@ public class WordDBHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Added successfully", Toast.LENGTH_LONG).show();
         }
+        db.close();
     }
 
     public void editWord(int id, String phrase, String meaning) {
@@ -78,6 +79,7 @@ public class WordDBHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Saved successfully", Toast.LENGTH_LONG).show();
         }
+        db.close();
     }
     public void deleteWord(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -87,6 +89,7 @@ public class WordDBHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Deleted successfully", Toast.LENGTH_LONG).show();
         }
+        db.close();
     }
 
 
@@ -104,6 +107,7 @@ public class WordDBHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             result.add(new Triple<>(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
         }
+        db.close();
         return result;
     }
 
@@ -124,6 +128,7 @@ public class WordDBHelper extends SQLiteOpenHelper {
             String meaning = cursor.getString(1);
             result = new Pair<>(phrase,meaning);
         }
+        readDB.close();
         return result;
     }
 }

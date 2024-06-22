@@ -7,4 +7,5 @@
     <string name="save_btn">Save</string>
     <string name="search_btn">Search</string>
     <string name="deleteBtn">Delete</string>
+    <string name="makeSentenceBtn">Make Sentences</string>
 </resources>
