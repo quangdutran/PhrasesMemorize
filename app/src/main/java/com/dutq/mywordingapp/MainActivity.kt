@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                     ) {  tts?.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, "sentence") }
                 } ?: throw Exception()
             } catch (exception: Exception) {
+                exception.printStackTrace()
                 DialogBuilder.showSentence(this@MainActivity, "Gemini could not make a sentence for you", null)
             }
             showProgressBar(false)
