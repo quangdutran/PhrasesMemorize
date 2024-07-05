@@ -17,14 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:text="Word" />
+            android:hint="Word" />
 
         <EditText
             android:id="@+id/meaningText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:text="Meaning" />
+            android:hint="Meaning" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

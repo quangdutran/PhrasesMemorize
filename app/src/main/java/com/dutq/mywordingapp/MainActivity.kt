@@ -3,7 +3,7 @@ package com.dutq.mywordingapp
 import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.speech.tts.TextToSpeechService
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.INVISIBLE
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                     ) {  tts?.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, "sentence") }
                 } ?: throw Exception()
             } catch (exception: Exception) {
-                exception.printStackTrace()
+                Log.e("GeminiError", exception.message, exception)
                 DialogBuilder.showSentence(this@MainActivity, "Gemini could not make a sentence for you", null)
             }
             showProgressBar(false)
